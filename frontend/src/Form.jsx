@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-function App() {
+export default function Form() {
 	const [question, setQuestion] = useState('');
 	const [responses, setResponses] = useState([]);
 	const [userInput, setUserInput] = useState({
@@ -57,8 +57,6 @@ function App() {
 		</MainContainer>
 	);
 }
-
-export default App;
 
 const MainContainer = styled.section`
 	width: 70%;
