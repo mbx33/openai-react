@@ -1,0 +1,17 @@
+{
+  "name": "openai-react",
+  "version": "1.0.0",
+  "description": "getting responses from an ai",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "test": "jest"
+  },
+  "author": "Matt Baxter",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  }
+}
