@@ -2,13 +2,10 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-export default function Form() {
+function Form() {
 	const [question, setQuestion] = useState('');
 	const [responses, setResponses] = useState([]);
-	const [userInput, setUserInput] = useState({
-		input: '',
-		response: '',
-	});
+	const [results, setResults] = useState([]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -18,7 +15,13 @@ export default function Form() {
 				input: question,
 			});
 			const result = response.data;
-			setResponses([...responses, result]);
+			setResponses([...responses, question, result]);
+			// setResults(() => (
+			// 	<div>
+			// 		<p>{question}</p>
+			// 		<h2>{result}</h2>
+			// 	</div>
+			// ));
 		} catch (error) {
 			console.log('ERROR', error);
 		}
@@ -44,19 +47,20 @@ export default function Form() {
 			</FormWrapper>
 			<ResponseWrapper>
 				<h2>Response from Leonardo</h2>
+				<h1>Answer: </h1>
 				{responses &&
 					responses.map((response, index) => (
-						<ul>
-							<li key={index}>
-								{/* {response.question} */}
-								{response}
-							</li>
-						</ul>
+						<div key={index}>
+							<h2>{response}</h2>
+						</div>
 					))}
+				{results}
 			</ResponseWrapper>
 		</MainContainer>
 	);
 }
+
+export default Form;
 
 const MainContainer = styled.section`
 	width: 70%;
