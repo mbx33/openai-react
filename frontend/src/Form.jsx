@@ -23,7 +23,7 @@ function Form() {
 		e.preventDefault();
 		setQuestion('');
 		try {
-			const response = await axios.post('http://localhost:5000/api/question', {
+			const response = await axios.post('/api/question', {
 				input: question,
 			});
 			console.log(response.data.result);
