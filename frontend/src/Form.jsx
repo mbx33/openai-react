@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ResponseCard from './ResponseCard';
 
-const arrayOfObjects = [
-	{ coffee: 'Americano', size: 'Medium' },
-	{ coffee: 'Espresso', size: 'Single' },
-];
+// const arrayOfObjects = [
+// 	{ coffee: 'Americano', size: 'Medium' },
+// 	{ coffee: 'Espresso', size: 'Single' },
+// ];
 
 function Form() {
 	const [question, setQuestion] = useState('');
@@ -57,11 +57,11 @@ function Form() {
 				</form>
 			</FormWrapper>
 			<ResponseWrapper>
-				{arrayOfObjects.map(({ coffee, size }) => (
+				{/* {arrayOfObjects.map(({ coffee, size }) => (
 					<p>
 						Coffee type {coffee} in a {size} size.
 					</p>
-				))}
+				))} */}
 				<h2>Response from Leonardo</h2>
 				<h1>Answer: </h1>
 				{data &&
