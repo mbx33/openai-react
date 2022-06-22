@@ -1,11 +1,23 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import ResponseCard from './ResponseCard';
+
+const arrayOfObjects = [
+	{ coffee: 'Americano', size: 'Medium' },
+	{ coffee: 'Espresso', size: 'Single' },
+];
 
 function Form() {
 	const [question, setQuestion] = useState('');
 	const [responses, setResponses] = useState([]);
-	const [results, setResults] = useState([]);
+	const [userQuestion, setUserQuestion] = useState([]);
+	const [data, setData] = useState([
+		{
+			input: '',
+			answer: '',
+		},
+	]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -14,14 +26,13 @@ function Form() {
 			const response = await axios.post('http://localhost:5000/api/question', {
 				input: question,
 			});
-			const result = response.data;
-			setResponses([...responses, question, result]);
-			// setResults(() => (
-			// 	<div>
-			// 		<p>{question}</p>
-			// 		<h2>{result}</h2>
-			// 	</div>
-			// ));
+			console.log(response.data.result);
+			const result = response.data.result;
+			const userInput = response.data.input;
+			// setResponses([...responses, result]);
+			// setUserQuestion([...userQuestion, userInput]);
+			setData([{ ...data, input: userInput, answer: result }]);
+			console.log(data, 'this is data state');
 		} catch (error) {
 			console.log('ERROR', error);
 		}
@@ -46,15 +57,19 @@ function Form() {
 				</form>
 			</FormWrapper>
 			<ResponseWrapper>
+				{arrayOfObjects.map(({ coffee, size }) => (
+					<p>
+						Coffee type {coffee} in a {size} size.
+					</p>
+				))}
 				<h2>Response from Leonardo</h2>
 				<h1>Answer: </h1>
-				{responses &&
-					responses.map((response, index) => (
-						<div key={index}>
-							<h2>{response}</h2>
-						</div>
+				{data &&
+					data.map(({ input, answer }) => (
+						<>
+							<ResponseCard question={input} answer={answer} key={answer} />
+						</>
 					))}
-				{results}
 			</ResponseWrapper>
 		</MainContainer>
 	);

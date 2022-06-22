@@ -13,6 +13,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.join(__dirname, 'frontend/dist')));
+}
+//  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/frontend/src/index.html'));
+});
+
 app.post('/api/question', async (req, res) => {
 	const input = req.body.input;
 	// console.log(id);
@@ -37,7 +48,7 @@ app.post('/api/question', async (req, res) => {
 		);
 		const result = response.data.choices[0].text;
 
-		res.status(200).send(result);
+		res.status(200).send({ result, input });
 		// setResponses([...responses, result]);
 	} catch (error) {
 		console.log('ERROR', error);
