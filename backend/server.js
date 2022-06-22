@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middleware/errorMiddleware');
 const port = process.env.PORT || 5000;
 const axios = require('axios');
+const path = require('path');
 
 // ai url = https://api.openai.com/v1/engines/text-curie-001/completions
 
@@ -12,19 +13,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
-app.use(express.static(path.join(__dirname, 'frontend/dist')));
-
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.join(__dirname, 'frontend/dist')));
-	app.get('*', (req, res) => {
-		res.sendFile(path.join((__dirname = 'frontend/dist/index.html')));
-	});
-}
-
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/frontend/index.html'));
-});
 
 app.post('/api/question', async (req, res) => {
 	const input = req.body.input;
@@ -56,6 +44,22 @@ app.post('/api/question', async (req, res) => {
 		console.log('ERROR', error);
 	}
 });
+
+//Serve static assets if in production
+
+if (process.env.NODE_ENV === 'production') {
+	// Set static folder
+	app.use(express.static('frontend/dist'));
+
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve((__dirname, 'frontend', 'dist', 'index.html')));
+	});
+}
+
+// app.use(express.static(path.join(__dirname, 'frontend/dist')));
+// app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/frontend/index.html'));
+// });
 
 app.use(errorHandler);
 
