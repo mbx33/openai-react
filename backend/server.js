@@ -56,11 +56,6 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-// app.use(express.static(path.join(__dirname, 'frontend/dist')));
-// app.get('*', (req, res) => {
-// 	res.sendFile(path.join(__dirname + '/frontend/index.html'));
-// });
-
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
