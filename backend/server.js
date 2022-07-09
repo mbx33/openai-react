@@ -16,7 +16,6 @@ app.use(cors());
 
 app.post('/api/question', async (req, res) => {
 	const input = req.body.input;
-	// console.log(id);
 	let data = {
 		prompt: input,
 		temperature: 0.5,

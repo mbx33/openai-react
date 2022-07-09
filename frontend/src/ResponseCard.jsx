@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
-function ResponseCard({ question, answer, key }) {
-	// console.log(answer);
+function ResponseCard({ question, answer, id }) {
 	return (
-		<div key={key}>
-			<Card>
+		<div>
+			<Card key={id}>
 				<InfoWrapper>
-					<h1>{question}</h1>
-					<h2>{answer}</h2>
+					<div className="question">
+						<h1>Question: {question}</h1>
+					</div>
+					<div className="answer">
+						<h2>Answer:{answer}</h2>
+					</div>
 				</InfoWrapper>
 			</Card>
 		</div>
@@ -16,6 +19,24 @@ function ResponseCard({ question, answer, key }) {
 
 export default ResponseCard;
 
-const Card = styled.div``;
+const Card = styled.div`
+	width: 100%;
+	box-shadow: 0 0 1rem #222;
+	border-radius: 1.6rem;
 
-const InfoWrapper = styled.div``;
+	margin: 0.8rem auto;
+`;
+
+const InfoWrapper = styled.div`
+	background-color: #222;
+	border-radius: 1.6rem;
+
+	padding: 1rem 2rem;
+
+	.question {
+		padding: 0.4rem;
+	}
+	.answer {
+		padding: 0.4rem;
+	}
+`;

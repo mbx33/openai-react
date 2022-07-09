@@ -3,36 +3,23 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ResponseCard from './ResponseCard';
 
-// const arrayOfObjects = [
-// 	{ coffee: 'Americano', size: 'Medium' },
-// 	{ coffee: 'Espresso', size: 'Single' },
-// ];
-
 function Form() {
 	const [question, setQuestion] = useState('');
 	const [responses, setResponses] = useState([]);
-	const [userQuestion, setUserQuestion] = useState([]);
-	const [data, setData] = useState([
-		{
-			input: '',
-			answer: '',
-		},
-	]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setQuestion('');
 		try {
-			const response = await axios.post('/api/question', {
+			const response = await axios.post('api/question', {
 				input: question,
 			});
-			console.log(response.data.result);
 			const result = response.data.result;
 			const userInput = response.data.input;
-			// setResponses([...responses, result]);
-			// setUserQuestion([...userQuestion, userInput]);
-			setData([{ ...data, input: userInput, answer: result }]);
-			console.log(data, 'this is data state');
+			const resData = { id: new Date().getTime().toString(), userInput, result };
+			setResponses((response) => {
+				return [...response, resData];
+			});
 		} catch (error) {
 			console.log('ERROR', error);
 		}
@@ -40,15 +27,15 @@ function Form() {
 
 	return (
 		<MainContainer>
-			<h1>Ask Leonardo</h1>
+			<h1 className="title">Ask Leonardo</h1>
 			<FormWrapper>
 				<form onSubmit={handleSubmit} method="POST">
 					<div className="form-input">
-						<label htmlFor="prompt">Statement or Question:</label>
 						<input
 							type="text"
 							id="prompt"
 							value={question}
+							placeholder="Your Question"
 							required
 							onChange={(e) => setQuestion(e.target.value)}
 						/>
@@ -57,19 +44,13 @@ function Form() {
 				</form>
 			</FormWrapper>
 			<ResponseWrapper>
-				{/* {arrayOfObjects.map(({ coffee, size }) => (
-					<p>
-						Coffee type {coffee} in a {size} size.
-					</p>
-				))} */}
-				<h2>Response from Leonardo</h2>
-				<h1>Answer: </h1>
-				{data &&
-					data.map(({ input, answer }) => (
-						<>
-							<ResponseCard question={input} answer={answer} key={answer} />
-						</>
-					))}
+				{responses &&
+					responses.map((response) => {
+						const { id, userInput, result } = response;
+						return (
+							<ResponseCard question={userInput} answer={result} id={id} />
+						);
+					})}
 			</ResponseWrapper>
 		</MainContainer>
 	);
@@ -78,10 +59,12 @@ function Form() {
 export default Form;
 
 const MainContainer = styled.section`
-	width: 70%;
+	/* width: 100%; */
 	margin: 0 auto;
 
-	h1 {
+	.title {
+		font-size: 3rem;
+		margin-top: 2rem;
 		text-align: center;
 	}
 `;
@@ -89,7 +72,7 @@ const MainContainer = styled.section`
 const FormWrapper = styled.div`
 	input {
 		font-size: 1.4rem;
-		width: 80%;
+		width: 60%;
 		padding: 0.7rem;
 	}
 
@@ -100,14 +83,21 @@ const FormWrapper = styled.div`
 		padding: 3rem;
 		gap: 1.2rem;
 	}
+
+	button {
+		background-color: green;
+		padding: 0.5rem 2rem;
+		border-radius: 1rem;
+		cursor: pointer;
+
+		&:hover {
+			background-color: lightblue;
+		}
+	}
 `;
 
 const ResponseWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-
-	li {
-		list-style-type: none;
-	}
 `;
