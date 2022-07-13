@@ -7,18 +7,22 @@ function Form() {
 	const [question, setQuestion] = useState('');
 	const [responses, setResponses] = useState([]);
 
+	// add url to post string when running local
+	// const localUrl = 'http://localhost:5000';
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setQuestion('');
 		try {
-			const response = await axios.post('api/question', {
+			const response = await axios.post(`/api/question`, {
 				input: question,
 			});
 			const result = response.data.result;
 			const userInput = response.data.input;
 			const resData = { id: new Date().getTime().toString(), userInput, result };
+
 			setResponses((response) => {
-				return [...response, resData];
+				return [resData, ...response];
 			});
 		} catch (error) {
 			console.log('ERROR', error);
@@ -48,7 +52,12 @@ function Form() {
 					responses.map((response) => {
 						const { id, userInput, result } = response;
 						return (
-							<ResponseCard question={userInput} answer={result} id={id} />
+							<ResponseCard
+								key={id}
+								question={userInput}
+								answer={result}
+								id={id}
+							/>
 						);
 					})}
 			</ResponseWrapper>
