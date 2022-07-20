@@ -6,8 +6,6 @@ const port = process.env.PORT || 5000;
 const axios = require('axios');
 const path = require('path');
 
-// ai url = https://api.openai.com/v1/engines/text-curie-001/completions
-
 const app = express();
 
 app.use(express.json());
