@@ -68,7 +68,6 @@ function Form() {
 export default Form;
 
 const MainContainer = styled.section`
-	/* width: 100%; */
 	margin: 0 auto;
 
 	.title {
@@ -95,12 +94,16 @@ const FormWrapper = styled.div`
 
 	button {
 		background-color: green;
+		opacity: 0.8;
 		padding: 0.5rem 2rem;
 		border-radius: 1rem;
 		cursor: pointer;
+		text-transform: uppercase;
+		font-weight: bold;
+		font-size: 1.1rem;
 
 		&:hover {
-			background-color: lightblue;
+			opacity: 1;
 		}
 	}
 `;
@@ -109,4 +112,6 @@ const ResponseWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	max-width: 70%;
+	margin: 0 auto;
 `;

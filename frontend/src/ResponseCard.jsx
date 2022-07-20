@@ -28,7 +28,7 @@ const Card = styled.div`
 `;
 
 const InfoWrapper = styled.div`
-	background-color: #222;
+	background-color: hsl(0, 0%, 48%);
 	border-radius: 1.6rem;
 
 	padding: 1rem 2rem;

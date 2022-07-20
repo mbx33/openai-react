@@ -74,7 +74,7 @@ select {
 }
 
 body {
-	background-color: #050004;
+	background-color: hsl(0, 0%, 4%);
 	background-image: url('https://www.transparenttextures.com/patterns/dark-fish-skin.png');
 	color: #fff;
 	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
